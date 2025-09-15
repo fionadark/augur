@@ -48,4 +48,20 @@ public class Card {
     public String getDesc() {
         return desc;
     }
+
+    // Returns a String with the meaning of the card in an HTML <td> to easily enter into the display table.
+    // This function will use the correct meaning depending on if the card is upright or reversed.
+    public String getCardMeaningAsHTML(boolean reversed) {
+        String meaning = "";
+
+        if (reversed) {
+            meaning = " <td><strong>" + this.name + "</strong><br><br>This card reversed represents: " + this.meaning_rev
+                    + "</td>";
+        } else {
+            meaning = " <td><strong>" + this.name + "</strong><br><br>This card represents: " + this.meaning_up + "</td>";
+        }
+
+        return meaning;
+    }
+
 }

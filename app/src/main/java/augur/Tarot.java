@@ -62,26 +62,6 @@ public class Tarot implements Callable<String> {
         return chance <= 3;
     }
 
-    // getCardMeaning() will return a String with the meaning of the given card in a HTML <td> to enter into the display table
-    // if the image is reversed, this function uses the reversed meaning
-    public String getCardMeaning(boolean reversed, String cardName, String uprightMeaning, String reversedMeaning) {
-        String meaning = "";
-
-        // check for invalid arguments
-        if (cardName == null || uprightMeaning == null || reversedMeaning == null) {
-            throw new IllegalArgumentException("null argument");
-        }
-
-        // use correct meaning for if card is reversed or upright
-        if (reversed)
-            meaning = " <td><strong>" + cardName + "</strong><br><br>This card reversed represents: " + reversedMeaning
-                    + "</td>";
-        else
-            meaning = " <td><strong>" + cardName + "</strong><br><br>This card represents: " + uprightMeaning + "</td>";
-
-        return meaning;
-    }
-
     // getCardPos() will return a String with the position of the card in the spread
     // first position represents "Your Past", second position represents "Your Present", etc.
     public String getCardPos(int numCards, int pos) {
