@@ -65,7 +65,14 @@ public class Tarot implements Callable<String> {
     // getEncodedImgString() will encode a given image in base 64
     // returns encoded img as a String
     public String getEncodedImgString(String imgName) {
-        String img = System.getProperty("user.dir") + "/app/src/main/resources/images/" + imgName + ".jpg";
+        // verify valid imgName
+        if(imgName.isEmpty() || imgName == null) {
+            System.out.println("Invalid image request.");
+            return "";
+        }
+
+        // path to image should be : userDir/src/main/resources/images/imgName.jpg
+        String img = System.getProperty("user.dir") + "/src/main/resources/images/" + imgName + ".jpg";
         String encodedImgString = "";
 
         // encode image in base 64
