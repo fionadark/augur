@@ -12,6 +12,14 @@ public class Card {
     public String meaning_rev;
     public String desc;
 
+    public Card() {}
+
+    public Card(String name, String meaning_up, String meaning_rev) {
+        this.name = name;
+        this.meaning_up = meaning_up;
+        this.meaning_rev = meaning_rev;
+    }
+
     // accessor methods
     public String getName() {
         return name;
