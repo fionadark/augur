@@ -62,32 +62,6 @@ public class Tarot implements Callable<String> {
         return chance <= 3;
     }
 
-    // getCardPos() will return a String with the position of the card in the spread
-    // first position represents "Your Past", second position represents "Your Present", etc.
-    public String getCardPos(int numCards, int pos) {
-        String[] positions = { "Your Past", "Your Present", "Your Future", "Your Current Challenge", "Your Conscious",
-                "Your Subconscious", "The Cards Advice", "Your External Influences", "Your Hopes and Fears",
-                "The Outcome" };
-        String cardPos = "";
-
-        // check for invalid arguments
-        if (numCards < 1 || numCards > 10 || pos < 0 || pos > 9) {
-            System.out.println("numCards: " + numCards);
-            System.out.println("pos: " + pos);
-            throw new IllegalArgumentException("invalid argument");
-        }
-
-        // set cardPos value depending on meaning of card's position in the spread
-        if (numCards == 1)
-            cardPos = " <td>" + positions[2] + "</td>";
-        else if (numCards == 3 || numCards == 10)
-            cardPos = " <td>" + positions[pos] + "</td>";
-        else
-            cardPos = " <td>The Future </td>";
-
-        return cardPos;
-    }
-
     /* writeToFile() creates an HTML tag for each card in a spread to display its meaning, position, and image
      * each HTML tag is included in a HTML table
      * the HTML table is written to index.html to display as a web page
@@ -118,7 +92,7 @@ public class Tarot implements Callable<String> {
             strBuilder.append(imgHTMLTag);
 
             // append value for "Position" column of table to strBuilder
-            String cardPos = getCardPos(curSpread.getNHits(), i);
+            String cardPos = Card.getCardPosName(curSpread.getNHits(), i);
             strBuilder.append(cardPos);
 
             // append value for "Meaning" column of table to strBuilder

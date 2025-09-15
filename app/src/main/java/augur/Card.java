@@ -72,4 +72,31 @@ public class Card {
         return meaning;
     }
 
+    // Returns a String with the name of the card's position in the spread
+    // 1st position is "Your Past", 2nd position is "Your Present", 3rd position is "Your Future", etc.
+    public static String getCardPosName(int numCards, int pos) {
+        String[] positionNames = { "Your Past", "Your Present", "Your Future", "Your Current Challenge", "Your Conscious",
+                "Your Subconscious", "The Cards Advice", "Your External Influences", "Your Hopes and Fears",
+                "The Outcome" };
+        String cardPosName = "";
+
+        // Check for invalid arguments
+        if (numCards < 1 || numCards > 10 || pos < 0 || pos > 9) {
+            System.out.println("numCards: " + numCards);
+            System.out.println("pos: " + pos);
+            throw new IllegalArgumentException("invalid argument");
+        }
+
+        // Set cardPosName depending on the meaning of the card's position in the spread
+        if (numCards == 1) {
+            cardPosName = " <td>" + positionNames[2] + "</td>";
+        } else if (numCards == 3 || numCards == 10) {
+            cardPosName = " <td>" + positionNames[pos] + "</td>";
+        } else {
+            cardPosName = " <td>The Future </td>";
+        }
+
+        return cardPosName;
+    }
+
 }
