@@ -62,49 +62,6 @@ public class Tarot implements Callable<String> {
         return chance <= 3;
     }
 
-    // getEncodedImgString() will encode a given image in base 64
-    // returns encoded img as a String
-    public String getEncodedImgString(String imgName) {
-        // verify valid imgName
-        if(imgName.isEmpty() || imgName == null) {
-            System.out.println("Invalid image request.");
-            return "";
-        }
-
-        // path to image should be : userDir/src/main/resources/images/imgName.jpg
-        String img = System.getProperty("user.dir") + "/src/main/resources/images/" + imgName + ".jpg";
-        String encodedImgString = "";
-
-        // encode image in base 64
-        try {
-            byte[] imgAsBytes = Files.readAllBytes(Paths.get(img));
-            encodedImgString = Base64.getEncoder().encodeToString(imgAsBytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return encodedImgString;
-    }
-
-    // getImgHTMLTag() creates and returns an HTML tag with the given image string
-    // if the card is reversed, the img tag includes "transform: rotate(160deg)" so image will display upside down
-    public String getImgHTMLTag(boolean reversed, String img) {
-        String tag = "";
-
-        // check for invalid arguments
-        if (img == null)
-            throw new IllegalArgumentException("null argument");
-
-        // if the card is reversed, alter img tag to flip the image 180 degrees
-        if (reversed)
-            tag = " <td> <img src=\"data:image/jpg;base64," + img
-                    + "\" style=\"width:150px; height:auto; transform: rotate(180deg);\"> </td>";
-        else
-            tag = " <td> <img src=\"data:image/jpg;base64," + img + "\" style=\"width:150px; height:auto;\"> </td>";
-
-        return tag;
-    }
-
     // getCardMeaning() will return a String with the meaning of the given card in a HTML <td> to enter into the display table
     // if the image is reversed, this function uses the reversed meaning
     public String getCardMeaning(boolean reversed, String cardName, String uprightMeaning, String reversedMeaning) {
@@ -174,10 +131,10 @@ public class Tarot implements Callable<String> {
             boolean reversed = reverseTrueOrFalse();
 
             // get base 64 encoded path to tarot card image
-            String encodedImgString = getEncodedImgString(curSpread.getCards().get(i).getNameShort());
+            String encodedImgString = ImgUtils.getEncodedImgString(curSpread.getCards().get(i).getNameShort());
 
             // append value for "Your Cards" column of table to strBuilder
-            String imgHTMLTag = getImgHTMLTag(reversed, encodedImgString);
+            String imgHTMLTag = ImgUtils.getImgHTMLTag(reversed, encodedImgString);
             strBuilder.append(imgHTMLTag);
 
             // append value for "Position" column of table to strBuilder
@@ -185,8 +142,7 @@ public class Tarot implements Callable<String> {
             strBuilder.append(cardPos);
 
             // append value for "Meaning" column of table to strBuilder
-            String cardMeaning = getCardMeaning(reversed, curSpread.getCards().get(i).getName(),
-                    curSpread.getCards().get(i).getMeaningUp(), curSpread.getCards().get(i).getMeaningRev());
+            String cardMeaning = curSpread.getCards().get(i).getCardMeaningAsHTML(reversed);
             strBuilder.append(cardMeaning);
 
             // close row
@@ -424,10 +380,5 @@ public class Tarot implements Callable<String> {
         beginNewReading();
 
         return "";
-    }
-
-    public static void main(String[] args) {
-        Tarot tarotReading = new Tarot();
-        tarotReading.call();
     }
 }
