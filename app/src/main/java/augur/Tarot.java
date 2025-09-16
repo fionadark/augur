@@ -6,10 +6,8 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.Callable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-
 import java.awt.Desktop;
 
 @Command(name = "tarot", mixinStandardHelpOptions = true, version = "augur 1.0", description = "divines the future")

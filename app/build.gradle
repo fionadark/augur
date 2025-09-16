@@ -39,6 +39,12 @@ dependencies {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport // report is always generated after tests run
+
+    testLogging {
+        events "passed", "failed", "skipped"
+        exceptionFormat "full"
+        showStandardStreams = true
+    }
 }
 
 jacocoTestReport {
