@@ -29,9 +29,25 @@ public class CardTest {
     }
 
     @Test
-    public void test_getCardPos() {
+    public void test_getCardPos_1Card() {
+        String expected = " <td>Your Future</td>";
+        String actual = Card.getCardPosName(1,1);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_getCardPos_3Cards() {
         String expected = " <td>Your Future</td>";
         String actual = Card.getCardPosName(3,2);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void test_getCardPos_10Cards() {
+        String expected = " <td>The Cards Advice</td>";
+        String actual = Card.getCardPosName(10,6);
 
         assertEquals(expected, actual);
     }
