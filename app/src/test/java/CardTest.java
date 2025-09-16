@@ -1,8 +1,7 @@
-package augur;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import augur.Card;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {

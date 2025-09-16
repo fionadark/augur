@@ -1,4 +1,4 @@
-package augur;
+import augur.Spread;
 
 public class SpreadTest {
     
