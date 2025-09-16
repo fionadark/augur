@@ -5,6 +5,13 @@ public class Spread {
     public int nhits;
     public List<Card> cards;
 
+    public Spread() {}
+
+    public Spread(int nhits, List<Card> cards) {
+        this.nhits = nhits;
+        this.cards = cards;
+    }
+
     // accessor methods
     public List<String> getShortNames() {
         List<String> names = new ArrayList<String>();

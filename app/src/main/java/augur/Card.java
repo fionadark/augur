@@ -12,12 +12,30 @@ public class Card {
     public String meaning_rev;
     public String desc;
 
+    // Default constructor
     public Card() {}
 
+    // Mini constructor for testing
+    // only initializes name, meaning_up, and meaning_rev
     public Card(String name, String meaning_up, String meaning_rev) {
         this.name = name;
         this.meaning_up = meaning_up;
         this.meaning_rev = meaning_rev;
+    }
+
+    // Full constructor for testing
+    // initializes all fields
+    public Card(String name, String name_short, String value, int value_int, String suit, String type,
+            String meaning_up, String meaning_rev, String desc) {
+        this.name = name;
+        this.name_short = name_short;
+        this.value = value;
+        this.value_int = value_int;
+        this.suit = suit;
+        this.type = type;
+        this.meaning_up = meaning_up;
+        this.meaning_rev = meaning_rev;
+        this.desc = desc;
     }
 
     // accessor methods
