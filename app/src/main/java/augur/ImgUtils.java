@@ -12,8 +12,7 @@ public class ImgUtils {
     public static String getEncodedImgString(String imgName) {
         // verify valid imgName
         if(imgName.isEmpty() || imgName == null) {
-            System.out.println("Invalid image request.");
-            return "";
+            throw new IllegalArgumentException("Invalid image name.");
         }
 
         // path to image should be : userDir/src/main/resources/images/imgName.jpg
