@@ -9,49 +9,55 @@ import java.util.List;
 
 public class FileUtils {
 
-    /* writeToFile() creates an HTML tag for each card in a spread to display its meaning, position, and image
-     * each HTML tag is included in a HTML table
-     * the HTML table is written to index.html to display as a web page
+    /**
+     * Writes the details of a tarot spread to an HTML file for display as a web page.
+     * For each card in the spread, this method generates an HTML table row containing the card's image, position, and meaning.
+     * The resulting HTML table is inserted into a styled HTML document and saved to the specified file path.
+     *
+     * @param curSpread the Spread object containing the cards and their meanings to be displayed
+     * @param path the file path where the HTML output will be written
+     * @param curNames a list of short names for the cards in the spread
+     * @throws IOException if an error occurs while writing to the file
      */
     public static void writeToFile(Spread curSpread, String path, List<String> curNames) {
 
-        // truncate exisiting contents of index.html to 0
+        // Truncate any existing conntents of index.html
         File file = new File(path);
         if (file.exists())
             file.delete();
 
-        // declare strBuilder that will hold values for rows of html table
+        // Declare StringBuilder to hold rows of html table
         StringBuilder strBuilder = new StringBuilder();
 
-        // save each row of the table to strBuilder
+        // Save each card's info as a row in the html table
         for (int i = 0; i < curSpread.getNHits(); i++) {
-            // open new row
+            // Open new row
             strBuilder.append("<tr>");
 
-            // check if this card should be reversed
+            // Determine if card is reversed
             boolean reversed = Tarot.reverseTrueOrFalse();
 
-            // get base 64 encoded path to tarot card image
+            // Get base 64 encoded image string for card
             String encodedImgString = ImgUtils.getEncodedImgString(curSpread.getCards().get(i).getNameShort());
 
-            // append value for "Your Cards" column of table to strBuilder
+            // Append value for "Your Cards" column of table to strBuilder
             String imgHTMLTag = ImgUtils.getImgHTMLTag(reversed, encodedImgString);
             strBuilder.append(imgHTMLTag);
 
-            // append value for "Position" column of table to strBuilder
+            // Append value for "Position" column of table to strBuilder
             String cardPos = Card.getCardPosName(curSpread.getNHits(), i);
             strBuilder.append(cardPos);
 
-            // append value for "Meaning" column of table to strBuilder
+            // Append value for "Meaning" column of table to strBuilder
             String cardMeaning = curSpread.getCards().get(i).getCardMeaningAsHTML(reversed);
             strBuilder.append(cardMeaning);
 
-            // close row
+            // Close row
             strBuilder.append(" </tr>\n");
 
         }
 
-        // insert strBuilder into html code that will be written to index.html
+        // Create full HTML output with table rows inserted
         String output = """
                 <html>
                     <head>
@@ -75,7 +81,7 @@ public class FileUtils {
                 </html>
                 """.formatted(strBuilder.toString());
 
-        // write to index.html
+        // Write output to file
         try {
             Files.write(Paths.get(path), output.getBytes(), StandardOpenOption.CREATE);
         } catch (IOException e) {
