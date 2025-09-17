@@ -34,11 +34,13 @@ public class Tarot implements Callable<String> {
         else
             answer = "N";
 
-        if (answer.equals("Y") || answer.equals("Yes")) {
+        if (answer.equals("Y") || answer.equals("Yes")
+        || answer.equals("y") || answer.equals("yes")) {
             // To start another reading, invoke call method on new Tarot instance
             Tarot t = new Tarot();
             t.call();
-        } else if (answer.equals("N") || answer.equals("No")) {
+        } else if (answer.equals("N") || answer.equals("No")
+        || answer.equals("n") || answer.equals("no")) {
             // To end the program, simply exit
             System.out.println("\nOkay, goodbye!\n");
         } else {
@@ -162,11 +164,21 @@ public class Tarot implements Callable<String> {
                 spreadSelected = true;
             }
 
+            // Catch invalid user input
+            if (!userInput.contains("1") && !userInput.contains("2")) {
+                throw new IllegalArgumentException("Invalid input.");
+            }
+
             System.out.println("\nWould you like to focus on how your past connects to your future, or just on your future?");
             System.out.println("1) The past and present.");
             System.out.println("2) Just the future.");
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
+
+            // Catch invalid user input
+            if (!userInput.contains("1") && !userInput.contains("2")) {
+                throw new IllegalArgumentException("Invalid input.");
+            }
 
             // Past, present, and future -> three-card spread
             if (userInput.contains("1") && spreadSelected == false) {
@@ -179,6 +191,11 @@ public class Tarot implements Callable<String> {
             System.out.println("2) Specific reading.");
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
+
+            // Catch invalid user input
+            if (!userInput.contains("1") && !userInput.contains("2")) {
+                throw new IllegalArgumentException("Invalid input.");
+            }
 
             // General reading / default -> ten-card spread
             if(spreadSelected == false) {
