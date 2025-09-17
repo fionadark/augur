@@ -21,9 +21,11 @@ public class Tarot implements Callable<String> {
 
     @Option(names = { "-t", "--tarot" }, description = "divines the future")
 
-    /* beginNewReading() asks the user if they want to perform another reading
-     * if yes -> create new Tarot object and call call()
-     * if no -> end program
+    /**
+     * Prompts the user to perform another tarot reading.
+     * If the user chooses to continue, a new reading is started by creating a new Tarot instance and invoking its call method.
+     * If the user chooses not to continue, the program ends gracefully.
+     * @throws IllegalArgumentException if the user input is invalid.
      */
     public void beginNewReading() {
         String answer;
@@ -48,9 +50,10 @@ public class Tarot implements Callable<String> {
 
     }
 
-    /* reverseTrueOrFalse() determines if a card is drawn in reverse position (this will be true 30% of the time)
-     * if reversed, return true
-     * if not reversed, return false
+    /**
+     * Generates a random boolean value indicating if a card is reversed.
+     * There is a 30% chance that the card is reversed (true) and a 70% chance that it is not reversed (false).
+     * @return true if the card is reversed, false otherwise
      */
     public static boolean reverseTrueOrFalse() {
         Random rand = new Random();
@@ -61,8 +64,14 @@ public class Tarot implements Callable<String> {
         return chance <= 3;
     }
 
-    // tellFuture() prints each spread to the command line so that the user can see their results even if index.html does not launch
-    // this is ugly... is there a more efficient way to do this?
+    /**
+     * Displays the results of a tarot reading to the command line.
+     * The output varies depending on the type of spread chosen (one-card, three-card, or ten-card/celtic cross).
+     * 
+     * @param curSpread   the Spread object containing the cards and their meanings for the reading
+     * @param userChoice  a String representing the user's selected spread type (e.g., "1", "3", or "10")
+     * @throws IllegalArgumentException if the userChoice does not correspond to a valid spread
+     */
     public void tellFuture(Spread curSpread, String userChoice) {
 
         // if the user has chosen the celtic cross...
@@ -99,12 +108,14 @@ public class Tarot implements Callable<String> {
 
     }
 
-    /* selectTarotSpread() is a method to select which tarot spread to use:
-     *      1) one card spread
-     *      2) three card spread
-     *      3) celtic cross (10 card spread)
-     * this method edits the given URL String to return the correct # of cards from the tarot Api for the chosen Spread
-     * returns the final URL String
+    /**
+     * Prompts the user to select a tarot spread, either by choosing directly or by answering guiding questions.
+     * Based on user input, this method appends the appropriate number of cards to the provided URL string to form a complete API request.
+     * The supported spreads are: one-card, three-card, and ten-card (Celtic Cross).
+     * 
+     * @param URLStarter the base URL string to which the number of cards for the selected spread will be appended
+     * @return the final URL string representing the user's chosen tarot spread
+     * @throws IllegalArgumentException if the user input does not correspond to a valid spread selection
      */
     public String selectTarotSpread(String URLStarter) {
         String userInput;
@@ -183,9 +194,15 @@ public class Tarot implements Callable<String> {
         return URLStarter;
     }
 
-    /* call() executes as Callable on the command line
-     * this method creates a spread, gathers data from the Tarot Api, and launches index.html to display the tarot reading
-     * call() also calls beginNewReading() at the end to see if the user would like another reading
+    /**
+     * Executes a tarot reading session from the command line.
+     * This method prompts the user to select a tarot spread, retrieves card data from the Tarot API,
+     * displays the reading results, writes the reading to an HTML file, and opens the file in the default browser.
+     * At the end of the session, the user is prompted to perform another reading or exit.
+     * 
+     * @return an empty String after the reading session completes
+     * @throws RuntimeException if the Tarot API connection fails
+     * @throws IllegalArgumentException if the user input is invalid during spread selection or reading prompts
      */
     @Override
     public String call() {
