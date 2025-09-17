@@ -15,16 +15,14 @@ public class Card {
     // Default constructor
     public Card() {}
 
-    // Mini constructor for testing
-    // only initializes name, meaning_up, and meaning_rev
+    // Mini constructor for testing (only initializes name, meaning_up, and meaning_rev)
     public Card(String name, String meaning_up, String meaning_rev) {
         this.name = name;
         this.meaning_up = meaning_up;
         this.meaning_rev = meaning_rev;
     }
 
-    // Full constructor for testing
-    // initializes all fields
+    // Full constructor for testing (initializes all fields)
     public Card(String name, String name_short, String value, int value_int, String suit, String type,
             String meaning_up, String meaning_rev, String desc) {
         this.name = name;
@@ -38,7 +36,7 @@ public class Card {
         this.desc = desc;
     }
 
-    // accessor methods
+    // Accessor methods
     public String getName() {
         return name;
     }
@@ -75,8 +73,13 @@ public class Card {
         return desc;
     }
 
-    // Returns a String with the meaning of the card in an HTML <td> to easily enter into the display table.
-    // This function will use the correct meaning depending on if the card is upright or reversed.
+    /**
+     * Returns an HTML <td> element containing the card's name and meaning.
+     * The meaning displayed depends on whether the card is upright or reversed.
+     *
+     * @param reversed true if the card is reversed and the reversed meaning should be used; false for upright meaning
+     * @return a String representing an HTML <td> element with the card's name and appropriate meaning
+     */
     public String getCardMeaningAsHTML(boolean reversed) {
         String meaning = "";
 
@@ -90,8 +93,15 @@ public class Card {
         return meaning;
     }
 
-    // Returns a String with the name of the card's position in the spread
-    // 1st position is "Your Past", 2nd position is "Your Present", 3rd position is "Your Future", etc.
+    /**
+     * Returns an HTML <td> element containing the name of the card's position in the tarot spread.
+     * The position name varies based on the number of cards in the spread and the card's index.
+     *
+     * @param numCards the total number of cards in the spread (must be 1, 3, or 10)
+     * @param pos the zero-based index of the card in the spread (must be between 0 and 9)
+     * @return a String representing an HTML <td> element with the card's position name
+     * @throws IllegalArgumentException if numCards or pos are outside valid ranges
+     */
     public static String getCardPosName(int numCards, int pos) {
         String[] positionNames = { "Your Past", "Your Present", "Your Future", "Your Current Challenge", "Your Conscious",
                 "Your Subconscious", "The Cards Advice", "Your External Influences", "Your Hopes and Fears",
@@ -105,7 +115,7 @@ public class Card {
             throw new IllegalArgumentException("invalid argument");
         }
 
-        // Set cardPosName depending on the meaning of the card's position in the spread
+        // Determine position name based on numCards and pos
         if (numCards == 1) {
             cardPosName = " <td>" + positionNames[2] + "</td>";
         } else if (numCards == 3 || numCards == 10) {
