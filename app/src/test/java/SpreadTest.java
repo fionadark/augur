@@ -37,4 +37,7 @@ public class SpreadTest {
         Spread spread = new Spread(2, expectedCards);
         assertIterableEquals(expectedCards, spread.getCards());
     }
+
+    // Note to self: Add tests for selectTarotSpread
+    
 }
