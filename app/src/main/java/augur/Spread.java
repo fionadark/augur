@@ -12,7 +12,7 @@ public class Spread {
         this.cards = cards;
     }
 
-    // accessor methods
+    // Accessor methods
     public List<String> getShortNames() {
         List<String> names = new ArrayList<String>();
 

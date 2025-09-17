@@ -6,17 +6,15 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.Callable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-
 import java.awt.Desktop;
 
 @Command(name = "tarot", mixinStandardHelpOptions = true, version = "augur 1.0", description = "divines the future")
 
 public class Tarot implements Callable<String> {
 
-    // global scanner to handle all user input
+    // Global scanner for user input
     public static final Scanner SCANNER = new Scanner(System.in);
 
     @Option(names = { "-t", "--tarot" }, description = "divines the future")
@@ -34,17 +32,17 @@ public class Tarot implements Callable<String> {
         if (SCANNER.hasNextLine())
             answer = SCANNER.nextLine();
         else
-            answer = "N"; // rather than throw an error
+            answer = "N";
 
-        // to start another reading, call .call() on a new instance of Tarot
         if (answer.equals("Y") || answer.equals("Yes")) {
+            // To start another reading, invoke call method on new Tarot instance
             Tarot t = new Tarot();
             t.call();
-            // end program if user chooses no
         } else if (answer.equals("N") || answer.equals("No")) {
+            // To end the program, simply exit
             System.out.println("\nOkay, goodbye!\n");
-            // throw an exception for weird input
         } else {
+            // Throw an exception for invalid input
             throw new IllegalArgumentException("That wasn't an option, sorry!");
         }
 
@@ -74,7 +72,7 @@ public class Tarot implements Callable<String> {
      */
     public void tellFuture(Spread curSpread, String userChoice) {
 
-        // if the user has chosen the celtic cross...
+        // Print results of a celtic cross (10-card) spread
         if(userChoice.contains("10")) {
             System.out.println("Ten cards present themselves to you...\n");
             System.out.println("Your present: " + curSpread.getCards().get(0).getName() + "\nThis card represents: " + curSpread.getCards().get(0).getMeaningUp() + "\n");
@@ -87,7 +85,7 @@ public class Tarot implements Callable<String> {
             System.out.println("Your external influences: " + curSpread.getCards().get(7).getName() + "\nThis card represents: " + curSpread.getCards().get(7).getMeaningUp() + "\n");
             System.out.println("Your hopes and fears: " + curSpread.getCards().get(8).getName() + "\nThis card represents: " + curSpread.getCards().get(8).getMeaningUp() + "\n");
             System.out.println("Your outcome: " + curSpread.getCards().get(9).getName() + "\nThis card represents: " + curSpread.getCards().get(9).getMeaningUp() + "\n");
-        // if the user has chosen a three-card draw...
+        // Print results of a three-card spread
         } else if (userChoice.contains("3")) {
             System.out.println("Three cards present themselves to you...\n");
             System.out.println("Your past: " + curSpread.getCards().get(0).getName());
@@ -96,11 +94,11 @@ public class Tarot implements Callable<String> {
             System.out.println(curSpread.getCards().get(1).getMeaningRev() + "\n");
             System.out.println("Your future: " + curSpread.getCards().get(2).getName());
             System.out.println(curSpread.getCards().get(2).getMeaningRev() + "\n");
-        // if the user has chosen a one-card draw...
+        // Print results of a one-card spread
         } else if (userChoice.contains("1")) {
             System.out.println("The card that presents itself to you is " + curSpread.getCards().get(0).getName() + "\n");
             System.out.println("This card represents: " + curSpread.getCards().get(0).getMeaningRev() + "\n");
-        // if the user has entered something else
+        // Handle invalid input
         } else {
             System.out.println("No cards present themselves to you. Your future remains murky!\n");
             throw new IllegalArgumentException("invalid user input");
@@ -121,7 +119,7 @@ public class Tarot implements Callable<String> {
         String userInput;
         boolean spreadSelected = false;
 
-        // ask user if they want to pick their own spread or have augur choose for them
+        // Prompt user to choose tarot spread
         System.out.println(
                 "\nTo begin, would you like to choose your own tarot spread or allow Augur to choose one for you?");
         System.out.println("1) Choose my own.");
@@ -129,7 +127,7 @@ public class Tarot implements Callable<String> {
         System.out.print("Enter the # of your choice: ");
         userInput = SCANNER.nextLine();
 
-        // option 1: allow user to choose their own tarot spread
+        // Option 1: User selects tarot spread
         if (userInput.contains("1")) {
 
             System.out.println("\nExcellent! Select the type of reading you would like, and prepare to look beyond the veil...\n");
@@ -140,15 +138,15 @@ public class Tarot implements Callable<String> {
             userInput = SCANNER.nextLine();
 
             if (userInput.contains("1"))
-                URLStarter += "1"; // one card spread
+                URLStarter += "1";
             else if (userInput.contains("2"))
-                URLStarter += "3"; // three card spread
+                URLStarter += "3";
             else if (userInput.contains("3"))
-                URLStarter += "10"; // celtic cross (10 card spread)
+                URLStarter += "10";
             else
                 URLStarter += "0";
 
-        // option 2: provide guiding questions to choose type of tarot spread for the user
+        // Option 2: Augur selects tarot spread based on user's answers to questions
         } else if (userInput.contains("2")) {
 
             System.out.println("\nExcellent! Use your inner eye to choose your answers to a few guiding questions, and Augur can select a tarot spread for you.");
@@ -158,7 +156,7 @@ public class Tarot implements Callable<String> {
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
 
-            // for a simple reading, give user the one-card spread
+            // Simple reading -> one-card spread
             if (userInput.contains("1") && spreadSelected == false) {
                 URLStarter += "1";
                 spreadSelected = true;
@@ -170,7 +168,7 @@ public class Tarot implements Callable<String> {
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
 
-            // for a reading of both past and present, give user the three-card spread
+            // Past, present, and future -> three-card spread
             if (userInput.contains("1") && spreadSelected == false) {
                 URLStarter += "3";
                 spreadSelected = true;
@@ -182,7 +180,7 @@ public class Tarot implements Callable<String> {
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
 
-            // as default, give reader the celtic cross spread (10 cards)
+            // General reading / default -> ten-card spread
             if(spreadSelected == false) {
                 URLStarter += "10";
             }
@@ -207,11 +205,11 @@ public class Tarot implements Callable<String> {
     @Override
     public String call() {
 
-        // welcome message
+        // Welcome message
         System.out.println("\nWelcome to Augur: The Free Tarot Tool!");
         System.out.println("This is a command line interface designed to provide an authentic tarot card reading experience.");
 
-        // select tarot spread
+        // Build URL for Tarot API request based on user's selected spread
         String URLStarter = "https://tarotapi.dev/api/v1/cards/random?n=";
         String URLString = selectTarotSpread(URLStarter);
         System.out.println("\nReading the portents... Consulting the auguries... \n");
@@ -219,7 +217,7 @@ public class Tarot implements Callable<String> {
         int equalsIndex = URLString.indexOf("=");
         String userChoice = URLString.substring(equalsIndex + 1);
 
-        // establish connection to Tarot API URL
+        // Make GET request to Tarot API and read response
         try {
             URI u = new URI(URLString);
             URL url = u.toURL();
@@ -227,43 +225,36 @@ public class Tarot implements Callable<String> {
             conn.setRequestMethod("GET");
             conn.connect();
 
-            // check if connection was successful before continuing!
+            // Verify connection is successful
             int responseCode = conn.getResponseCode();
             if (responseCode != 200) {
                 throw new RuntimeException("api connection failure");
             } else {
 
+                // Read data from API into String and convert JSON response to Spread object using Jackson
                 String inline = "";
                 Scanner scanner = new Scanner(url.openStream());
 
-                // write data into one big string
+                // Read data from API
                 while (scanner.hasNext()) {
                     inline += scanner.nextLine();
                 }
 
-                // read data from String inline into Spread currentSpread
+                // Convert JSON response into Spread object
                 ObjectMapper mapper = new ObjectMapper();
                 Spread currentSpread = mapper.readValue(inline, Spread.class);
 
-                // call tellFuture with currentSpread to print out the cards
+                // Display results of tarot reading to command line
                 tellFuture(currentSpread, userChoice);
 
-                // close the secondary scanner
+                // Connection cleanup
                 scanner.close();
 
-                // get url of index.html and make sure it exists
+                // Write results of tarot reading to index.html and open in browser
                 File f = new File(System.getProperty("user.home") + "/index.html");
-
-                // get absolute path of file
                 String path = f.getAbsolutePath();
-
-                // get list of the short_names of currentSpread
                 List<String> currentNames = currentSpread.getShortNames();
-
-                // write html tag into index.html for each card in currentNames/currentSpread
                 FileUtils.writeToFile(currentSpread, path, currentNames);
-
-                // open index.html
                 Desktop.getDesktop().open(f);
             }
 
@@ -271,7 +262,7 @@ public class Tarot implements Callable<String> {
             exception.printStackTrace();
         }
 
-        // check if user wants another reading
+        // Prompt user to begin a new reading or exit
         beginNewReading();
 
         return "";

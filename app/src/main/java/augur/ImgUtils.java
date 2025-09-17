@@ -49,11 +49,11 @@ public class ImgUtils {
     public static String getImgHTMLTag(boolean reversed, String img) {
         String tag = "";
 
-        // check for invalid arguments
+        // Verify valid argument
         if (img == null)
             throw new IllegalArgumentException("null argument");
 
-        // if the card is reversed, alter img tag to flip the image 180 degrees
+        // Create HTML <img> tag with appropriate styling
         if (reversed)
             tag = " <td> <img src=\"data:image/jpg;base64," + img
                     + "\" style=\"width:150px; height:auto; transform: rotate(180deg);\"> </td>";
