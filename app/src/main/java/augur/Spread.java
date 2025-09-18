@@ -101,6 +101,12 @@ public class Spread {
         return URLStarter;
     }
 
+    /**
+     * Prompts the user to self select a Tarot spread type from a list of options.
+     * @param SCANNER the Scanner object used to read user input from the command line
+     * @param URLStarter the base URL string to which the number of cards for the selected spread will be appended
+     * @return the final URL string
+     */
     public static String userSelfSelect(Scanner SCANNER, String URLStarter) {
         String userInput;
 
@@ -112,6 +118,7 @@ public class Spread {
         System.out.println(
                 "3) The Celtic Cross \nA complex reading representing the many aspects of your life. Peer into your future, if you dare...\n");
         System.out.print("Enter the # of your choice: ");
+        
         userInput = SCANNER.nextLine();
 
         if (userInput.contains("1")) {
@@ -143,6 +150,7 @@ public class Spread {
             System.out.println("1) Simple.");
             System.out.println("2) Complex.");
             System.out.print("Enter the # of your choice: ");
+            
             userInput = SCANNER.nextLine();
 
             if (userInput.contains("1")) {
@@ -172,6 +180,7 @@ public class Spread {
             System.out.println("1) The past and present.");
             System.out.println("2) Just the future.");
             System.out.print("Enter the # of your choice: ");
+            
             userInput = SCANNER.nextLine();
 
             if (userInput.contains("1")) {
@@ -202,6 +211,7 @@ public class Spread {
             System.out.println("1) General reading.");
             System.out.println("2) Specific reading.");
             System.out.print("Enter the # of your choice: ");
+            
             userInput = SCANNER.nextLine();
 
             if (userInput.contains("1")) {
