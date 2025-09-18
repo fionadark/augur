@@ -100,20 +100,18 @@ public class Spread {
                 spreadSelected = selectThreeCardSpread(SCANNER);
             }
 
-            System.out
-                    .println("\nDo you want a general reading, or do you want to focus on one aspect of your future?");
-            System.out.println("1) General reading.");
-            System.out.println("2) Specific reading.");
-            System.out.print("Enter the # of your choice: ");
-            userInput = SCANNER.nextLine();
-
-            // Catch invalid user input
-            if (!userInput.contains("1") && !userInput.contains("2")) {
-                throw new IllegalArgumentException("Invalid input.");
+            // Third, ask if the user wants a general or specific reading
+            if(!spreadSelected) {
+                spreadSelected = selectTenCardSpread(SCANNER);
+                if(spreadSelected) {
+                    URLStarter += "10";
+                }
+            } else {
+                spreadSelected = selectTenCardSpread(SCANNER);
             }
-
-            // General reading / default -> ten-card spread
-            if (spreadSelected == false) {
+            
+            // Provide default result (10 cards) if the user gave contradictory answers
+            if(!spreadSelected) {
                 URLStarter += "10";
             }
 
@@ -173,4 +171,30 @@ public class Spread {
 
         return true;
     }
+
+    // return true for the 10-card spread
+    public static boolean selectTenCardSpread(Scanner SCANNER) {
+        String userInput;
+        boolean userHasAnswered = false;
+
+        while(!userHasAnswered) {
+            System.out.println(
+                    "\nDo you want a general reading, or do you want to focus on one aspect of your future?");
+            System.out.println("1) General reading.");
+            System.out.println("2) Specific reading.");
+            System.out.print("Enter the # of your choice: ");
+            userInput = SCANNER.nextLine();
+
+            if(userInput.contains("1")) {
+                return true;
+            } else if(userInput.contains("2")) {
+                return false;
+            } else {
+                System.out.println("\nInvalid input. Please try again.");
+            }
+        }
+        
+        return true;
+    }
+    
 }
