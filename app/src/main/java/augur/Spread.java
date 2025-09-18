@@ -86,14 +86,14 @@ public class Spread {
 
             // First, ask if the user wants a simple or complex reading
             spreadSelected = selectOneCardSpread(SCANNER);
-            if(spreadSelected) {
+            if (spreadSelected) {
                 URLStarter += "1";
             }
 
             // Second, ask if the user wants to focus on the future or learn about the past/present
-            if(!spreadSelected) {
+            if (!spreadSelected) {
                 spreadSelected = selectThreeCardSpread(SCANNER);
-                if(spreadSelected) {
+                if (spreadSelected) {
                     URLStarter += "3";
                 }
             } else {
@@ -101,17 +101,17 @@ public class Spread {
             }
 
             // Third, ask if the user wants a general or specific reading
-            if(!spreadSelected) {
+            if (!spreadSelected) {
                 spreadSelected = selectTenCardSpread(SCANNER);
-                if(spreadSelected) {
+                if (spreadSelected) {
                     URLStarter += "10";
                 }
             } else {
                 spreadSelected = selectTenCardSpread(SCANNER);
             }
-            
+
             // Provide default result (10 cards) if the user gave contradictory answers
-            if(!spreadSelected) {
+            if (!spreadSelected) {
                 URLStarter += "10";
             }
 
@@ -122,12 +122,16 @@ public class Spread {
         return URLStarter;
     }
 
-    // return true if the user's answer will lead to a simple one-card spread
+    /**
+     * Prompts the user to choose between a simple or complex tarot reading (one-card or not).
+     * @param SCANNER the Scanner object used to read user input from the command line
+     * @return true if the user selects a simple reading (one-card spread); false otherwise
+     */
     public static boolean selectOneCardSpread(Scanner SCANNER) {
         String userInput;
         boolean userHasAnswered = false;
 
-        while(!userHasAnswered) {
+        while (!userHasAnswered) {
             System.out.println(
                     "\nWould you like a simple or complex reading?");
             System.out.println("1) Simple.");
@@ -135,9 +139,9 @@ public class Spread {
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
 
-            if(userInput.contains("1")) {
+            if (userInput.contains("1")) {
                 return true;
-            } else if(userInput.contains("2")) {
+            } else if (userInput.contains("2")) {
                 return false;
             } else {
                 System.out.println("\nInvalid input. Please try again.");
@@ -147,12 +151,17 @@ public class Spread {
         return true;
     }
 
-    // return true if the user's answer will lead to a 3-card spread
+    /**
+     * Prompts the user to choose the focus of their reading (three-card or not).
+     * @param SCANNER the Scanner object used to read user input from the command line
+     * @return true if the user selects to focus on the past and present (three-card
+     *         spread); false if otherwise
+     */
     public static boolean selectThreeCardSpread(Scanner SCANNER) {
         String userInput;
         boolean userHasAnswered = false;
 
-        while(!userHasAnswered) {
+        while (!userHasAnswered) {
             System.out.println(
                     "\nWould you like to focus on how your past connects to your future, or just on your future?");
             System.out.println("1) The past and present.");
@@ -160,9 +169,9 @@ public class Spread {
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
 
-            if(userInput.contains("1")) {
+            if (userInput.contains("1")) {
                 return true;
-            } else if(userInput.contains("2")) {
+            } else if (userInput.contains("2")) {
                 return false;
             } else {
                 System.out.println("\nInvalid input. Please try again.");
@@ -172,12 +181,16 @@ public class Spread {
         return true;
     }
 
-    // return true for the 10-card spread
+    /**
+     * Prompts the user to choose between a general tarot reading or a specific focus on one aspect of their future.     *
+     * @param SCANNER the Scanner object used to read user input from the command line
+     * @return true if the user selects a general reading (ten-card spread); false if otherwise
+     */
     public static boolean selectTenCardSpread(Scanner SCANNER) {
         String userInput;
         boolean userHasAnswered = false;
 
-        while(!userHasAnswered) {
+        while (!userHasAnswered) {
             System.out.println(
                     "\nDo you want a general reading, or do you want to focus on one aspect of your future?");
             System.out.println("1) General reading.");
@@ -185,16 +198,16 @@ public class Spread {
             System.out.print("Enter the # of your choice: ");
             userInput = SCANNER.nextLine();
 
-            if(userInput.contains("1")) {
+            if (userInput.contains("1")) {
                 return true;
-            } else if(userInput.contains("2")) {
+            } else if (userInput.contains("2")) {
                 return false;
             } else {
                 System.out.println("\nInvalid input. Please try again.");
             }
         }
-        
+
         return true;
     }
-    
+
 }
