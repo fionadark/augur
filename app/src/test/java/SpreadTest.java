@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import augur.Card;
 import augur.Spread;
 import org.junit.jupiter.api.Test;
