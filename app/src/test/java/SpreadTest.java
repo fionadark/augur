@@ -3,6 +3,8 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+
 import augur.Card;
 import augur.Spread;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,52 @@ public class SpreadTest {
         assertIterableEquals(expectedCards, spread.getCards());
     }
 
-    // Note to self: Add tests for selectTarotSpread
-    
+    // Test selectTarotSpread
+
+
+    // Test selectOneCardSpread
+    @Test
+    public void test_selectOneCardSpread_validInput() {
+        Scanner mockScanner = new Scanner("1\n");
+        boolean result = Spread.selectOneCardSpread(mockScanner);
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void test_selectOneCardSpread_invalidInput() {
+        Scanner mockScanner = new Scanner("invalid\n1\n");
+        boolean result = Spread.selectOneCardSpread(mockScanner);
+        assertEquals(true, result);
+    }
+
+    // Test selectThreeCardSpread
+    @Test
+    public void test_selectThreeCardSpread_validInput() {
+        Scanner mockScanner = new Scanner("1\n");
+        boolean result = Spread.selectThreeCardSpread(mockScanner);
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void test_selectThreeCardSpread_invalidInput() {
+        Scanner mockScanner = new Scanner("invalid\n1\n");
+        boolean result = Spread.selectThreeCardSpread(mockScanner);
+        assertEquals(true, result);
+    }
+
+    // Test selectTenCardSpread
+    @Test
+    public void test_selectTenCardSpread_validInput() {
+        Scanner mockScanner = new Scanner("1\n");
+        boolean result = Spread.selectTenCardSpread(mockScanner);
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void test_selectTenCardSpread_invalidInput() {
+        Scanner mockScanner = new Scanner("invalid\n1\n");
+        boolean result = Spread.selectTenCardSpread(mockScanner);
+        assertEquals(true, result);
+    }
+
 }
