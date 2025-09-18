@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -41,6 +42,34 @@ public class SpreadTest {
 
     // Test selectTarotSpread
 
+    // Test userSelfSelect
+    @Test
+    public void test_userSelfSelect_oneCard() {
+        Scanner scanner = new Scanner("1\n");
+        String result = Spread.userSelfSelect(scanner, "baseURL/");
+        assertEquals("baseURL/1", result);
+    }
+
+    @Test
+    public void test_userSelfSelect_threeCard() {
+        Scanner scanner = new Scanner("2\n");
+        String result = Spread.userSelfSelect(scanner, "baseURL/");
+        assertEquals("baseURL/3", result);
+    }
+
+    @Test
+    public void test_userSelfSelect_tenCard() {
+        Scanner scanner = new Scanner("3\n");
+        String result = Spread.userSelfSelect(scanner, "baseURL/");
+        assertEquals("baseURL/10", result);
+    }
+
+    @Test
+    public void test_userSelfSelect_invalidInput() {
+        Scanner scanner = new Scanner("invalid\n");
+        String result = Spread.userSelfSelect(scanner, "baseURL/");
+        assertEquals("baseURL/0", result);
+    }
 
     // Test selectOneCardSpread
     @Test

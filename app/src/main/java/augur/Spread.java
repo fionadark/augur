@@ -44,14 +44,13 @@ public class Spread {
      * @param URLStarter the base URL string to which the number of cards for the
      *                   selected spread will be appended
      * @return the final URL string representing the user's chosen tarot spread
-     * @throws IllegalArgumentException if the user input does not correspond to a
-     *                                  valid spread selection
+     * @throws IllegalArgumentException if the user input gives invalid input to 1st question
      */
     public static String selectTarotSpread(Scanner SCANNER, String URLStarter) {
         String userInput;
         boolean spreadSelected = false;
 
-        // Prompt user to choose tarot spread
+        // User can either select their own spread or answer questions to help augur choose
         System.out.println(
                 "\nTo begin, would you like to choose your own tarot spread or allow Augur to choose one for you?");
         System.out.println("1) Choose my own.");
