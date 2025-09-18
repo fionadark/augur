@@ -90,22 +90,14 @@ public class Spread {
                 URLStarter += "1";
             }
 
-            System.out.println(
-                    "\nWould you like to focus on how your past connects to your future, or just on your future?");
-            System.out.println("1) The past and present.");
-            System.out.println("2) Just the future.");
-            System.out.print("Enter the # of your choice: ");
-            userInput = SCANNER.nextLine();
-
-            // Catch invalid user input
-            if (!userInput.contains("1") && !userInput.contains("2")) {
-                throw new IllegalArgumentException("Invalid input.");
-            }
-
-            // Past, present, and future -> three-card spread
-            if (userInput.contains("1") && spreadSelected == false) {
-                URLStarter += "3";
-                spreadSelected = true;
+            // Second, ask if the user wants to focus on the future or learn about the past/present
+            if(!spreadSelected) {
+                spreadSelected = selectThreeCardSpread(SCANNER);
+                if(spreadSelected) {
+                    URLStarter += "3";
+                }
+            } else {
+                spreadSelected = selectThreeCardSpread(SCANNER);
             }
 
             System.out
@@ -157,4 +149,28 @@ public class Spread {
         return true;
     }
 
+    // return true if the user's answer will lead to a 3-card spread
+    public static boolean selectThreeCardSpread(Scanner SCANNER) {
+        String userInput;
+        boolean userHasAnswered = false;
+
+        while(!userHasAnswered) {
+            System.out.println(
+                    "\nWould you like to focus on how your past connects to your future, or just on your future?");
+            System.out.println("1) The past and present.");
+            System.out.println("2) Just the future.");
+            System.out.print("Enter the # of your choice: ");
+            userInput = SCANNER.nextLine();
+
+            if(userInput.contains("1")) {
+                return true;
+            } else if(userInput.contains("2")) {
+                return false;
+            } else {
+                System.out.println("\nInvalid input. Please try again.");
+            }
+        }
+
+        return true;
+    }
 }
