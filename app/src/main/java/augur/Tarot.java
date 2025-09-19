@@ -15,7 +15,7 @@ import java.awt.Desktop;
 public class Tarot implements Callable<String> {
 
     // Global scanner for user input
-    public static final Scanner SCANNER = new Scanner(System.in);
+    public static Scanner SCANNER = new Scanner(System.in);
 
     @Option(names = { "-t", "--tarot" }, description = "divines the future")
 
