@@ -1,13 +1,12 @@
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
-
 import org.junit.jupiter.api.BeforeEach;
+
+import augur.Spread;
 import augur.Tarot;
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +68,12 @@ public class TarotTest {
     }
 
     // Test tellFuture
+    @Test
+    public void test_tellFuture_invalidInput() {
+        Tarot tarot = new Tarot();
+        Spread spread = new Spread();
+        assertThrows(IllegalArgumentException.class, () -> tarot.tellFuture(spread, "invalid"));
+    }
 
     // Test call
 
