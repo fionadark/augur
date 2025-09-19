@@ -1,7 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -41,6 +39,30 @@ public class SpreadTest {
     }
 
     // Test selectTarotSpread
+    @Test
+    public void test_selectTarotSpread_invalidInput() {
+        Scanner scanner = new Scanner("invalid\n");
+
+        try {
+            Spread.selectTarotSpread(scanner, "baseURL/");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Invalid input.", e.getMessage());
+        }
+    }
+
+    @Test
+    public void test_selectTarotSpread_userSelfSelect() {
+        Scanner scanner = new Scanner("1\n1\n");
+        String result = Spread.selectTarotSpread(scanner, "baseURL/");
+        assertEquals("baseURL/1", result);
+    }
+
+    @Test
+    public void test_selectTarotSpread_augurSelect() {
+        Scanner scanner = new Scanner("2\n1\n1\n1\n");
+        String result = Spread.selectTarotSpread(scanner, "baseURL/");
+        assertEquals("baseURL/1", result);
+    }
 
     // Test userSelfSelect
     @Test
