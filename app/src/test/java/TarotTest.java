@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
-
 import augur.Spread;
 import augur.Tarot;
 import org.junit.jupiter.api.Test;
@@ -76,5 +75,14 @@ public class TarotTest {
     }
 
     // Test call
+    @Test
+    public void test_call_invalid() {
+            
+    }
+
+    @Test
+    public void test_call_valid() {
+        
+    }
 
 }
