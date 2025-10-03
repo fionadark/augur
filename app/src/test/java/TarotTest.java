@@ -1,5 +1,11 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.spy;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -8,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import augur.Spread;
 import augur.Tarot;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 public class TarotTest {
 
@@ -76,13 +83,38 @@ public class TarotTest {
 
     // Test call
     @Test
-    public void test_call_invalid() {
-            
+    public void test_call_simulateNetworkFailure() {
+        System.setIn(new ByteArrayInputStream("1\n1\n".getBytes()));
+        Scanner testScanner = new Scanner(System.in);
+
+        try (MockedStatic<Spread> spreadMock = mockStatic(Spread.class)) {
+            // Mock spread selection to return invalid URL
+            spreadMock.when(() -> Spread.selectTarotSpread(any(Scanner.class), anyString()))
+                    .thenReturn("https://invalid-url-that-does-not-exist.com/api?n=1");
+
+            // Create a spy of Tarot to mock beginNewReading
+            Tarot tarot = spy(new Tarot());
+            doNothing().when(tarot).beginNewReading(); // Mock beginNewReading to do nothing
+
+            // Temporarily replace the static SCANNER
+            Scanner originalScanner = Tarot.SCANNER;
+            Tarot.SCANNER = testScanner;
+
+            try {
+                String result = tarot.call();
+                assertEquals("", result);
+            } finally {
+                // Restore original scanner
+                Tarot.SCANNER = originalScanner;
+            }
+        } finally {
+            System.setIn(originalIn);
+        }
     }
 
     @Test
     public void test_call_valid() {
-        
+
     }
 
 }
