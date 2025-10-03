@@ -4,13 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.spy;
 
+import java.awt.Desktop;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
+import augur.FileUtils;
 import augur.Spread;
 import augur.Tarot;
 import org.junit.jupiter.api.Test;
@@ -113,8 +116,32 @@ public class TarotTest {
     }
 
     @Test
-    public void test_call_valid() {
+    public void test_call_validInput() {
+        System.setIn(new ByteArrayInputStream("1\n1\nN\n".getBytes()));
+        Tarot.SCANNER = new Scanner(System.in);
 
+        // Mock static methods to avoid external dependencies
+        try (MockedStatic<Spread> spreadMock = mockStatic(Spread.class);
+                MockedStatic<FileUtils> fileUtilsMock = mockStatic(FileUtils.class);
+                MockedStatic<Desktop> desktopMock = mockStatic(Desktop.class)) {
+
+            // Mock spread selection to return valid URL
+            spreadMock.when(() -> Spread.selectTarotSpread(any(Scanner.class), anyString()))
+                    .thenReturn("https://tarotapi.dev/api/v1/cards/random?n=1");
+
+            // Mock file operations
+            fileUtilsMock.when(() -> FileUtils.writeToFile(any(), anyString(), any())).thenAnswer(invocation -> null);
+
+            // Mock desktop operations
+            Desktop mockDesktop = mock(Desktop.class);
+            desktopMock.when(Desktop::getDesktop).thenReturn(mockDesktop);
+
+            Tarot tarot = new Tarot();
+            String result = tarot.call();
+
+            assertEquals("", result);
+        }
+        System.setIn(originalIn);
     }
 
 }
