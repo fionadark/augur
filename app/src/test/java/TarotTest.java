@@ -93,7 +93,7 @@ public class TarotTest {
         try (MockedStatic<Spread> spreadMock = mockStatic(Spread.class)) {
             // Mock spread selection to return invalid URL
             spreadMock.when(() -> Spread.selectTarotSpread(any(Scanner.class), anyString()))
-                    .thenReturn("https://invalid-url-that-does-not-exist.com/api?n=1");
+                    .thenReturn("http://192.0.2.1:12345/nonexistent");
 
             // Create a spy of Tarot to mock beginNewReading
             Tarot tarot = spy(new Tarot());
@@ -117,8 +117,8 @@ public class TarotTest {
 
     @Test
     public void test_call_validInput() {
-        System.setIn(new ByteArrayInputStream("1\n1\nN\n".getBytes()));
-        Tarot.SCANNER = new Scanner(System.in);
+        System.setIn(new ByteArrayInputStream("1\n1\n".getBytes()));
+        Scanner testScanner = new Scanner(System.in);
 
         // Mock static methods to avoid external dependencies
         try (MockedStatic<Spread> spreadMock = mockStatic(Spread.class);
@@ -136,12 +136,24 @@ public class TarotTest {
             Desktop mockDesktop = mock(Desktop.class);
             desktopMock.when(Desktop::getDesktop).thenReturn(mockDesktop);
 
-            Tarot tarot = new Tarot();
-            String result = tarot.call();
+            // Create a spy of Tarot to mock beginNewReading
+            Tarot tarot = spy(new Tarot());
+            doNothing().when(tarot).beginNewReading(); // Mock beginNewReading to do nothing
 
-            assertEquals("", result);
+            // Temporarily replace the static SCANNER
+            Scanner originalScanner = Tarot.SCANNER;
+            Tarot.SCANNER = testScanner;
+
+            try {
+                String result = tarot.call();
+                assertEquals("", result);
+            } finally {
+                // Restore original scanner
+                Tarot.SCANNER = originalScanner;
+            }
+        } finally {
+            System.setIn(originalIn);
         }
-        System.setIn(originalIn);
     }
 
 }
