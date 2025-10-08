@@ -1,0 +1,23 @@
+body {
+    background-color: pink;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+table {
+    width: 55%;
+    border: 0;
+    margin: auto;
+    background-color: white;
+    border-spacing: 25px;
+}
+
+img {
+    width: 150px;
+    height: auto;
+}
