@@ -10,7 +10,7 @@ html {
 }
 
 h1 {
-    color: darkblue;
+    color: white;
     text-align: center;
     padding: 30px 25px;
     font-family: 'Georgia', serif;
@@ -36,6 +36,18 @@ table {
     margin: auto;
     background-color: white;
     border-spacing: 25px;
+}
+
+th {
+    color: darkblue;
+    font-family: 'Georgia', serif;
+    font-size: 1.2em;
+    text-shadow: 
+        0 0 5px rgba(255, 215, 0, 0.8),
+        0 0 10px rgba(255, 215, 0, 0.6),
+        0 0 15px rgba(255, 215, 0, 0.4);
+    letter-spacing: 2px;
+    padding: 20px;
 }
 
 img {
