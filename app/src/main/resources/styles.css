@@ -1,0 +1,56 @@
+body {
+    background: linear-gradient(to bottom, pink, darkblue);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    padding: 30px 25px;
+    font-family: 'Georgia', serif;
+    font-size: 2.8em;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.6),
+        0 0 30px rgba(255, 215, 0, 0.4);
+    letter-spacing: 4px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+    to { text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8); }
+}
+
+table {
+    width: 55%;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin: auto;
+    background-color: white;
+    border-spacing: 25px;
+}
+
+th {
+    color: darkblue;
+    font-family: 'Georgia', serif;
+    font-size: 1.2em;
+    text-shadow: 
+        0 0 5px rgba(255, 215, 0, 0.8),
+        0 0 10px rgba(255, 215, 0, 0.6),
+        0 0 15px rgba(255, 215, 0, 0.4);
+    letter-spacing: 2px;
+    padding: 20px;
+}
+
+img {
+    width: 150px;
+    height: auto;
+}
