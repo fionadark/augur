@@ -1,5 +1,12 @@
 body {
     background: linear-gradient(to bottom, darkviolet, darkblue);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
 }
 
 h1 {
