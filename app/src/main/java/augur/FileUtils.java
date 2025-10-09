@@ -4,19 +4,24 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class FileUtils {
 
     /**
-     * Writes the details of a tarot spread to an HTML file for display as a web page.
-     * For each card in the spread, this method generates an HTML table row containing the card's image, position, and meaning.
-     * The resulting HTML table is inserted into a styled HTML document and saved to the specified file path.
+     * Writes the details of a tarot spread to an HTML file for display as a web
+     * page.
+     * For each card in the spread, this method generates an HTML table row
+     * containing the card's image, position, and meaning.
+     * The resulting HTML table is inserted into a styled HTML document and saved to
+     * the specified file path.
      *
-     * @param curSpread the Spread object containing the cards and their meanings to be displayed
-     * @param path the file path where the HTML output will be written
-     * @param curNames a list of short names for the cards in the spread
+     * @param curSpread the Spread object containing the cards and their meanings to
+     *                  be displayed
+     * @param path      the file path where the HTML output will be written
+     * @param curNames  a list of short names for the cards in the spread
      * @throws IOException if an error occurs while writing to the file
      */
     public static void writeToFile(Spread curSpread, String path, List<String> curNames) {
@@ -61,11 +66,10 @@ public class FileUtils {
         String output = """
                 <html>
                     <head>
-                        <style>
-                            h1 { color:white; text-align:center; padding-top:25px; padding-bottom:25px; }
-                            body { background-color:pink; }
-                            table { width:55%%; border:0; margin: auto; background-color:white; border-spacing:25px; }
-                        </style>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Augur</title>
+                        <link rel="stylesheet" href="styles.css">
                     </head>
                     <body>
                         <h1>Your future awaits...</h1>
@@ -84,10 +88,16 @@ public class FileUtils {
         // Write output to file
         try {
             Files.write(Paths.get(path), output.getBytes(), StandardOpenOption.CREATE);
+
+            // Copy CSS file to the same directory as the HTML file
+            String cssSourcePath = System.getProperty("user.dir") + "/src/main/resources/styles.css";
+            String cssDestPath = Paths.get(path).getParent().toString() + "/styles.css";
+            Files.copy(Paths.get(cssSourcePath), Paths.get(cssDestPath), StandardCopyOption.REPLACE_EXISTING);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-    
+
 }

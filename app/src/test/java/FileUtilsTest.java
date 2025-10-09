@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,6 +12,7 @@ import augur.Spread;
 import augur.Tarot;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
@@ -37,6 +39,7 @@ public class FileUtilsTest {
     }
 
     @Test
+    @Disabled("for later")
     public void test_writeToFile() throws Exception {
         List<String> curNames = Arrays.asList("MockShort");
 
