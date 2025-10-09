@@ -1,5 +1,5 @@
 # Welcome to Augur, the free Tarot tool! 🔮
-The cards foretold your arrival...
+✨The cards foretold your arrival...✨
 
 Augur is a Java-based command line interface that allows users to divine their future by performing authentic Tarot readings. To make this possible, it calls the [Tarot Card API](https://tarotapi.dev/) and implements the [Picocli framework](https://picocli.info/). All Tarot card images used in this project are taken from this [public domain archive](https://www.sacred-texts.com/tarot/xr/index.htm).
 
