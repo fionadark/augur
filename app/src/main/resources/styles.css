@@ -3,10 +3,16 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 html {
     height: 100%;
+    background: linear-gradient(to bottom, pink, darkblue);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 h1 {
